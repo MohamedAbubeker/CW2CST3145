@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="javascript.js"></script>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    
+    <title>Vue app</title>
+</head>
+<body id="App">
+    <h1 class="text-center ">Welcome to our Lessons shopping website</h1>
+    <div v-for="lesson in lessons" :key="lesson.id" class="lesson border border-primary rounded">
+        <div class="lesson-content">
+            <h4>topic</h4>
+            <h4>Subject: {{ lesson.topic }}</h4>
+            <h4>Loacation: {{ lesson.location }}</h4>
+            <h4>Price: <i class="fas fa-pound-sign"></i> {{ lesson.price }}</h4>
+        </div>
+
+ 
+</body>
+</html>
