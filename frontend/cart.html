@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="./styles.css">
+    <title>Vue app</title>
+</head>
+<body>
+    <div id="App">
+        <!--THis div will show all the lessons added to the cart-->
+        <div class="main-content-cart">
+            <div>
+                <a href="./index.html"><h1>Home</h1></a>
+            </div>
+            <div class="lessons">
+                <div v-for="lesson in cart" :key="lesson.id" class="lesson border border-primary rounded">
+                    <div class="lesson-content">
+                        <h4>Subject: {{ lesson.subject }}</h4>
+                        <h4>Loacation: {{ lesson.location }}</h4>
+                        <h4>Price: <i class="fas fa-pound-sign"></i> {{ lesson.price }}</h2>
+                        <button type="button" @click="removeLessonFromcart(lesson)">Remove</button>
+                    </div>
+                    
+                    <div >
+                        <img class="lesson-img" :src="lesson.url" :alt="lesson.subject" >
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div>
+            <form @submit.prevent="checkForm" class="checkout-form">
+                <div>
+                    <p>Name: </p>
+                    <!-- used the @input and :value instead of v-model to be able to run a function on input for regex matching -->
+                    <input type="text" name="name" id="name" placeholder="Enter your name" v-model="name" required>
+                    <p>Phone number: </p>
+                    <input type="text" name="phoneNumber" id="numer" placeholder="Enter your phone number" v-model="phoneNumber" required>
+                </div>
+               <button type="button" @click = "orderCheckout()">Checkout</button>
+            </form>
+        </div>
+    </div>
+
+
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="./jquery-1.12.4.min.js"></script>
+    <script src="./bootstrap.min.js"></script>
+    <script src="./javascript.js"></script>
+</body>
+</html>
