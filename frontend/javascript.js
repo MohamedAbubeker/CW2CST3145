@@ -31,26 +31,29 @@ const app = Vue.createApp({
         addLessonToCart(lesson) {
             if (lesson.space > 0) {
                 this.cart.push({
-                    id: lesson.id,
-                    subject: lesson.topic,
+                    _id: lesson._id,
+                    topic: lesson.topic,
                     location: lesson.location,
+                    space: lesson.space,
                     price: lesson.price,
-                    imageName: lesson.image
+                    image: lesson.image
                 });
 
                 let lessonIndex = this.lessons.indexOf(lesson);
                 this.lessons[lessonIndex].space = this.lessons[lessonIndex].space - 1;
             }
+            
             localStorage.setItem("cart", JSON.stringify(this.cart));
             localStorage.setItem("lessons", JSON.stringify(this.lessons));
         },
+        
         removeLessonFromcart(lesson) {
             let cartIndex = this.cart.indexOf(lesson);
             this.cart.splice(cartIndex, 1);
             localStorage.setItem("cart", JSON.stringify(this.cart));
 
             for (let i = 0; i < this.lessons.length; i++) {
-                if (this.lessons[i].id === lesson.id) {
+                if (this.lessons[i]._id === lesson.id) {
                     this.lessons[i].space += 1;
                     localStorage.setItem("lessons", JSON.stringify(this.lessons));
                 }
@@ -78,15 +81,6 @@ const app = Vue.createApp({
             }).then((res) => console.log("lesson added"))
              .catch((err) => console.log(err))
             },
-            
-        async removeOrderAtCheckout(){
-            
-
-
-            }
-
-        
-
 
     }
 

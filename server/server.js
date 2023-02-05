@@ -19,10 +19,7 @@ app.use(function (req, res, next) {
 
 
 // static images middleware
-app.use(function (req, res, next) {
-    console.log(new Date() + " || request method: " + req.method + " || on url: " + req.url);
-    next();
-})
+app.use(express.static('static'))
 
 app.get("/", (req, res) => {
     res.send("express server main route");
@@ -56,6 +53,7 @@ app.post("/lessons", (req, res) => {
         // call collection object
         const collectionSubjects = client.db("Schoolclasses").collection("subjects");
         const collectionOrder = client.db("Schoolclasses").collection("order");
+        
         /* 1.update the subjects collection and the subtract the lesson that been booked at the checkout */
         let order = [];
         let tempName = "initString";
