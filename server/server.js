@@ -50,29 +50,20 @@ app.get("/lessons", (req, res) => {
 
 app.post("/lessons", (req, res) => {
     
-    MongoClient.connect(uri, function (err, client) {
-        if (err) {
-            console.log('Error occurred while connecting to MongoDB Atlas...\n', err);
-        }
-        console.log('Connected...');
-        const collection = client.db("Schoolclasses").collection("subjects");
+    client.connect(err => {
         
-        // subtract the order spaces from the database 
-        for (req.body.id in req) {
-        collection.updateOne({ id: "req.body.id"}, { $set: { space: space - req.body.space } } )(function (err, result) {
-            if (err) {
-                console.log(err);
-            } else {
-                res.send(result);
-            }
-            client.close();
-        });
-    }
+        // perform actions on the collection object
+        const collection = client.db("Schoolclasses").collection("subjects");
+        // perform actions on the collection object
+        for (let i = 0; i < req.body.length; i++) {
+        collection.updateOne({ topic: req.body[i].subject}, { $inc: { space:  - 1 } } 
+        );
+        }
+        
     });
-    
-    
-    res.send("express server main route");
-});
+      client.close();
+    });
+
 
 app.listen(port, () => {
     console.log("server is running on port: " + port);

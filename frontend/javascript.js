@@ -66,18 +66,14 @@ const app = Vue.createApp({
         },
 
         async orderCheckout(){
+            let tempCart = localStorage.getItem("cart");
             fetch('http://localhost:4000/lessons', {
-                methods: "POST",
-                body: JSON.stringify(tempCart),
-                headers: {
-                "Content-type": "application/json; charset=UTF-8"
-            }
-        })    
-             .then((res) => console.log("lesson added"))
+                method: "POST",
+                body: tempCart,
+                headers: {"Content-type": "application/json; charset=UTF-8"}
+            }).then((res) => console.log("lesson added"))
              .catch((err) => console.log(err))
-    }    
-        
-
+            }    
 
         /* async addLessonToCart(lesson) {
              fetch('http://localhost:4000/lessons', {methods: "DELETE"})
