@@ -35,9 +35,9 @@ app.get("/lessons", (req, res) => {
             console.log('Error occurred while connecting to MongoDB Atlas...\n', err);
         }
         console.log('Connected...');
-        const collection = client.db("Schoolclasses").collection("subjects");
+        const collectionSubjects = client.db("Schoolclasses").collection("subjects");
         // perform actions on the collection object
-        collection.find({}).toArray(function (err, result) {
+        collectionSubjects.find({}).toArray(function (err, result) {
             if (err) {
                 console.log(err);
             } else {
@@ -48,27 +48,42 @@ app.get("/lessons", (req, res) => {
     });
 });
 
+ 
 app.post("/lessons", (req, res) => {
-    
+
     client.connect(err => {
         
-        // perform actions on the collection object
-        const collection = client.db("Schoolclasses").collection("subjects");
-        // perform actions on the collection object
+        // call collection object
+        const collectionSubjects = client.db("Schoolclasses").collection("subjects");
+        const collectionOrder = client.db("Schoolclasses").collection("order");
+        /* 1.update the subjects collection and the subtract the lesson that been booked at the checkout */
+        let order = [];
+        let tempName = "initString";
+        let temPhoneNumber = "initString";
         for (let i = 0; i < req.body.length; i++) {
-        collection.updateOne({ topic: req.body[i].subject}, { $inc: { space:  - 1 } } 
-        );
+            collectionSubjects.updateOne({ topic: req.body[i].subject}, { $inc: { space:  - 1 } } );
+            order.push({topic: req.body[i].subject, space:  1, price: req.body[i].price});
+            
+            if(req.body[i].name || req.body[i].phoneNumber){
+                tempName = req.body[i].name;
+                temPhoneNumber = req.body[i].phoneNumber;
+            }
+            
         }
         
+        /* 2.update the order collection and the add the lesson that been booked at the checkout */
+        collectionOrder.insertOne({
+            order,
+            name: tempName,
+            phoneNumber: temPhoneNumber
+        });
+        
+        
     });
-      client.close();
-    });
-
+    client.close();
+});
 
 app.listen(port, () => {
     console.log("server is running on port: " + port);
 
 });
-
-
-

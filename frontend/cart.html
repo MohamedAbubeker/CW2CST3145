@@ -22,7 +22,7 @@
                         <h4>Subject: {{ lesson.subject }}</h4>
                         <h4>Loacation: {{ lesson.location }}</h4>
                         <h4>Price: <i class="fas fa-pound-sign"></i> {{ lesson.price }}</h2>
-                        <button type="button" @click="removeLessonFromcart(lesson)">Remove</button>
+                        <button type="button" @click="removeOrderAtCheckout()">Remove</button>
                     </div>
                     
                     <div >
@@ -40,7 +40,7 @@
                     <p>Phone number: </p>
                     <input type="text" name="phoneNumber" id="numer" placeholder="Enter your phone number" v-model="phoneNumber" required>
                 </div>
-               <button type="button" @click = "orderCheckout()">Checkout</button>
+               <button type="button" @click = "checkoutOrder()">Checkout</button>
             </form>
         </div>
     </div>

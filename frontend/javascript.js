@@ -4,8 +4,8 @@ const app = Vue.createApp({
         return {
             lessons: [],
             cart: localStorage.getItem("cart") ? JSON.parse(localStorage.getItem("cart")) : [],
-            name: "",
-            password: ""
+            name: document.getElementById('name'),
+            phoneNumber: document.getElementById('number')
         }
     },
     created() {
@@ -65,21 +65,27 @@ const app = Vue.createApp({
             if (this.cart.length === 0) return true;
         },
 
-        async orderCheckout(){
+        async checkoutOrder(name, phoneNumber){
+            this.cart.push({"name": this.name, "phoneNumber": this.phoneNumber});
+            localStorage.setItem("cart", JSON.stringify(this.cart));
             let tempCart = localStorage.getItem("cart");
+           
+            
             fetch('http://localhost:4000/lessons', {
                 method: "POST",
                 body: tempCart,
                 headers: {"Content-type": "application/json; charset=UTF-8"}
             }).then((res) => console.log("lesson added"))
              .catch((err) => console.log(err))
-            }    
+            },
+            
+        async removeOrderAtCheckout(){
+            
 
-        /* async addLessonToCart(lesson) {
-             fetch('http://localhost:4000/lessons', {methods: "DELETE"})
-             .then((res) => console.log("lesson deleted"))
-             .catch((err) => console.log(err));
-         }*/
+
+            }
+
+        
 
 
     }
