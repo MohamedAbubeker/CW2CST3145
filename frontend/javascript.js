@@ -34,7 +34,7 @@ const app = Vue.createApp({
                     _id: lesson._id,
                     topic: lesson.topic,
                     location: lesson.location,
-                    space: lesson.space,
+                    space: 1,
                     price: lesson.price,
                     image: lesson.image
                 });
@@ -69,7 +69,7 @@ const app = Vue.createApp({
         },
 
         async checkoutOrder(name, phoneNumber){
-            this.cart.push({"name": this.name, "phoneNumber": this.phoneNumber});
+            //this.cart.push({"name": this.name, "phoneNumber": this.phoneNumber});
             localStorage.setItem("cart", JSON.stringify(this.cart));
             let tempCart = localStorage.getItem("cart");
            
@@ -77,6 +77,13 @@ const app = Vue.createApp({
             fetch('http://localhost:4000/lessons', {
                 method: "POST",
                 body: tempCart,
+                headers: {"Content-type": "application/json; charset=UTF-8"}
+            }).then((res) => console.log("lesson added"))
+             .catch((err) => console.log(err))
+
+             fetch('http://localhost:4000/lessons/cart', {
+                method: "POST",
+                body: {"name": this.name, "phoneNumber": this.phoneNumber},
                 headers: {"Content-type": "application/json; charset=UTF-8"}
             }).then((res) => console.log("lesson added"))
              .catch((err) => console.log(err))
