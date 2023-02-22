@@ -59,9 +59,10 @@ app.post("/lessons", (req, res) => {
         let tempName = "initString";
         let temPhoneNumber = "initString";
         for (let i = 0; i < req.body.length; i++) {
-            collectionSubjects.updateOne({ topic: req.body[i].subject}, { $inc: { space:  - 1 } } );
-            order.push({topic: req.body[i].subject, space:  1, price: req.body[i].price});
-            
+            if(req.body[i].topic != null){
+            collectionSubjects.updateOne({ topic: req.body[i].topic}, { $inc: { space:  - 1 } } );
+            order.push({topic: req.body[i].topic, space:  1, price: req.body[i].price});
+            }
             if(req.body[i].name || req.body[i].phoneNumber){
                 tempName = req.body[i].name;
                 temPhoneNumber = req.body[i].phoneNumber;
